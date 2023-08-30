@@ -1,22 +1,15 @@
 import { useRouter } from "next/router";
-import useSwr from "swr";
-import * as PokemonApi from "@/network/pokemon-api";
 import Head from "next/head";
 import Link from "next/link";
 import { Spinner } from "react-bootstrap";
 import Image from "next/image";
+import usePokemon from "@/hooks/usePokemon";
 
 export default function PokemonDetailsPage() {
   const router = useRouter();
   const pokemonName = router.query.pokemon?.toString() || ""; // ! get pokemon name from url params
 
-  const { data: pokemon, isLoading: pokemonLoading } = useSwr(
-    pokemonName,
-    PokemonApi.getPokemon,
-    {
-      revalidateOnFocus: false, // ! optimisticData config - third argument in useSwr hook
-    }
-  );
+  const { pokemon, pokemonLoading } = usePokemon(pokemonName);
 
   return (
     <>
@@ -31,6 +24,7 @@ export default function PokemonDetailsPage() {
           </Link>
         </p>
         {pokemonLoading && <Spinner animation="grow" />}
+        {pokemon === null && <p>Pokemon not found!</p>}
         {pokemon && (
           <>
             <h1 className="text-center text-capitalize">{pokemon.name}</h1>
