@@ -2,6 +2,9 @@ import { Pokemon, PokemonPage } from "@/models/Pokemon";
 import api from "./axiosInstance";
 
 export async function getPokemon(name: string) {
+  const delay = Math.random() * 2000;
+  await new Promise((resolve) => setTimeout(resolve, delay)); // ! delay loading of pokemons, it's too fast
+
   const { data } = await api.get<Pokemon>(`/pokemon/${name}`);
   return data;
 }
