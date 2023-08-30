@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div>
       <h1 className="text-center mb-4"> Gotta cache &apos;em all </h1>
-      <Row xs={1} md={2} lg={3} xl={4} xxl={5} className="g-4">
+      <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {data?.results.map((pokemon) => (
           <Col key={pokemon.name}>
             <PokemonEntry name={pokemon.name} />
